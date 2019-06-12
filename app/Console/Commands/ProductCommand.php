@@ -10,7 +10,6 @@ namespace App\Console\Commands;
 
 
 use App\Providers\PrestaShopServiceProvider;
-use http\Client\Request;
 use Illuminate\Console\Command;
 
 class ProductCommand extends Command
@@ -19,8 +18,26 @@ class ProductCommand extends Command
 
     public function handle()
     {
-        $fa = new PrestaShopServiceProvider('GET', 'https://api.github.com/user');
+        $service = new PrestaShopServiceProvider('GET', 'https://nemo.kz/api/products');
 
-        $response = $fa->response;
+        $response = $service->response;
+
+        $arrRes = $this->result($response);
+
+        foreach ($arrRes->products->product as $product) {
+
+        }
+    }
+
+    /**
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @return \stdClass
+     */
+    public function result(\Psr\Http\Message\ResponseInterface $response)
+    {
+        $xml = simplexml_load_string($response->getBody()->getContents(), 'SimpleXMLElement', LIBXML_NOCDATA);
+        $jsonRes = json_encode($xml);
+        $arrRes = json_decode($jsonRes);
+        return $arrRes;
     }
 }

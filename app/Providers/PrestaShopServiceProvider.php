@@ -30,7 +30,7 @@ class PrestaShopServiceProvider extends ServiceProvider
         $client = new Client();
 
         $this->response = $client->request($method, $url, [
-            'auth' => ['ino.coder@gmail.com', 'Make2281324!']
+            'auth' => [env('PRESTASHOP_WEBSERVICE_KEY'), '']
         ]);
     }
 
