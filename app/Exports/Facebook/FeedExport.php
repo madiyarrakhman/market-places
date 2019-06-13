@@ -43,7 +43,9 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
             $row->description,
             $row->image_link,
             $row->link,
-            $row->price
+            $row->price,
+            'new',
+            'in stock'
         ];
     }
 
@@ -56,6 +58,8 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
             'image_link',
             'link',
             'price',
+            'condition',
+            'availability'
         ];
     }
 }
