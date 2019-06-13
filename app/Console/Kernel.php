@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\FeedCommand;
 use App\Console\Commands\ProductCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;

@@ -11,6 +11,10 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('facebook/feed/export', 'Facebook\FeedController@export');
