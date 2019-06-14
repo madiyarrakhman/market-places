@@ -27,7 +27,7 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
      */
     public function query()
     {
-        return Feed::query();
+        return Feed::query()->where('is_active', '!=',0)->whereNotNull('image_link');
     }
 
     /**
@@ -40,10 +40,11 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
         return [
             $row->ps_id,
             $row->title,
+            $row->brand,
             $row->description,
             $row->image_link,
             $row->link,
-            $row->price,
+            $row->price.' KZT',
             'new',
             'in stock'
         ];
@@ -54,6 +55,7 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
         return [
             'id',
             'title',
+            'brand',
             'description',
             'image_link',
             'link',
