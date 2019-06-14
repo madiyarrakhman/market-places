@@ -13,8 +13,8 @@ set('repository', 'git@github.com:madiyarrakhman/market-places.git');
 set('git_tty', true); 
 
 // Shared files/dirs between deploys 
-add('shared_files', ['storage']);
-add('shared_dirs', ['.env']);
+add('shared_files', ['.env']);
+add('shared_dirs', []);
 
 // Writable dirs by web server 
 add('writable_dirs', []);
@@ -26,8 +26,26 @@ host('178.57.217.90')
     
 // Tasks
 
+task('deploy', [
+    'deploy:info',
+    'deploy:prepare',
+    'deploy:lock',
+    'deploy:release',
+    'deploy:update_code',
+    'deploy:shared',
+    'deploy:vendors',
+    'deploy:writable',
+    'deploy:symlink',
+    'deploy:unlock',
+    'cleanup',
+]);
+
 task('build', function () {
     run('cd {{release_path}} && build');
+});
+
+task('reload:php-fpm', function () {
+    run('sudo /usr/sbin/service php-fpm reload');
 });
 
 // [Optional] if deploy fails automatically unlock.
@@ -35,10 +53,8 @@ after('deploy:failed', 'deploy:unlock');
 
 // Migrate database before symlink new release.
 
-before('deploy:symlink', 'artisan:migrate');
+//before('deploy:symlink', 'artisan:migrate');
 
 after('deploy', 'reload:php-fpm');
-after('deploy', 'deploy:flush_config');
 after('rollback', 'reload:php-fpm');
-after('rollback', 'deploy:flush_config');
 
