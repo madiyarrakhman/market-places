@@ -10,7 +10,6 @@ namespace App\Exports\Facebook;
 
 
 use App\Models\Facebook\Feed;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
