@@ -14,9 +14,12 @@ use Illuminate\Database\Query\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\Exportable;
 
 class FeedExport implements FromQuery, WithMapping, WithHeadings
 {
+    use Exportable;
+
     public function collection()
     {
         return Feed::all();

@@ -17,6 +17,7 @@ class FeedController extends Controller
 {
     public function export()
     {
-        return Excel::download(new FeedExport(), 'feed.xlsx');
+        return (new FeedExport)->download(date("Y-m-d H:i:s").'-feed.csv', \Maatwebsite\Excel\Excel::CSV);
+        // return Excel::download(new FeedExport(), date("Y-m-d H:i:s").'-feed.xlsx');
     }
 }
