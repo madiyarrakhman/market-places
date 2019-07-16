@@ -10,6 +10,7 @@ namespace App\Exports\Facebook;
 
 
 use App\Models\Facebook\Feed;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -28,7 +29,7 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
     /**
      * @return Builder
      */
-    public function query()
+    public function query(): Feed
     {
         return Feed::query()->where('is_active', '!=',0)->whereNotNull('image_link');
     }
