@@ -19,6 +19,4 @@ class Feed extends Model
      * @var string
      */
     protected $table = 'fb_feed';
-
-
 }

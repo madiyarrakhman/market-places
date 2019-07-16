@@ -28,7 +28,7 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
     /**
      * @return Builder
      */
-    public function query(): Feed
+    public function query()
     {
         return Feed::query()->where('is_active', '!=',0)->whereNotNull('image_link');
     }
