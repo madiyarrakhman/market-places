@@ -23,6 +23,7 @@ class CreateFbFeedTable extends Migration
             $table->string('link')->default('');
             $table->string('price')->default('');
             $table->boolean('is_active')->default(0);
+            $table->integer('quantity')->default(0);
             $table->timestamps();
         });
     }

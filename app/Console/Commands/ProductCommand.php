@@ -58,6 +58,7 @@ class ProductCommand extends Command
             $model->price = $arrRes->product->price;
             $model->brand = $this->brand($arrRes->product->associations->product_features);
             $model->is_active = intval($arrRes->product->active);
+            $model->quantity = intval($arrRes->product->quantity);
             $model->update();
         }
     }

@@ -45,6 +45,7 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
             $row->image_link,
             $row->link,
             $row->price.' KZT',
+            ($row->quantity <= 0) ? '0' : $row->quantity,
             'new',
             'in stock'
         ];
@@ -60,6 +61,7 @@ class FeedExport implements FromQuery, WithMapping, WithHeadings
             'image_link',
             'link',
             'price',
+            'inventory',
             'condition',
             'availability'
         ];
