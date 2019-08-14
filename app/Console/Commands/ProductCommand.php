@@ -38,7 +38,7 @@ class ProductCommand extends Command
                 $model->save();
             }
             catch(\Illuminate\Database\QueryException $e){
-                print_r($e->getMessage());
+                // print_r($e->getMessage());
             }
         }
 
@@ -55,7 +55,7 @@ class ProductCommand extends Command
             $model->description = $this->description($arrRes->product);
             $model->image_link = ((is_string($arrRes->product->id_default_image)) ? 'https://nemo.kz/'.$arrRes->product->id_default_image.'-large_default/'.$arrRes->product->link_rewrite->language.'.jpg' : '');
             $model->link = 'https://nemo.kz/'.$model->ps_id.'-'.$arrRes->product->link_rewrite->language.'.html';
-            $model->price = $arrRes->product->price;
+            $model->price = $arrRes->product->price - $this->specificPrice($model->ps_id);
             $model->brand = $this->brand($arrRes->product->associations->product_features);
             $model->is_active = intval($arrRes->product->active);
             $model->quantity = intval($arrRes->product->quantity);
@@ -108,6 +108,27 @@ class ProductCommand extends Command
             }
         } else {
             return $product->name->language;
+        }
+    }
+
+    private function specificPrice($id = null)
+    {
+        $url = "https://nemo.kz/api/specific_prices/?display=full&filter[id_product]=[$id]";
+
+        $service = new PrestaShopServiceProvider('GET', $url);
+
+        $response = $service->response;
+
+        $arrRes = $this->result($response);
+
+        if (!empty($arrRes->specific_prices->specific_price)) {
+            if(is_array($arrRes->specific_prices->specific_price)) {
+                return intval(end($arrRes->specific_prices->specific_price)->reduction);
+            } else {
+                return intval($arrRes->specific_prices->specific_price->reduction);
+            }
+        } else {
+            return 0;
         }
     }
 }
